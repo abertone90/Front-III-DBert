@@ -11,7 +11,7 @@ function validacion(event){
       props.onPedido(pedido)
       setMensaje('')
     } else{
-        setMensaje('sin propina no hay pedido boton')
+        setMensaje('sin propina no hay pedido boton...')
     }
 
 }
