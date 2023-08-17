@@ -1,32 +1,57 @@
-import { useState } from "react"
+import React, { useState } from 'react';
 
-function Form(props){
-    const [pedido, setPedido]= useState('')
-    const [mensaje, setMensaje]= useState('')
+function Form({ onSubmit }) {
+  const [nombre, setNombre] = useState('');
+  const [color, setColor] = useState('');
+  const [mensaje, setMensaje] = useState('');
 
-function validacion(event){
-    event.preventDefault()
-    if (pedido !==''){
-      
-      props.onPedido(pedido)
-      setMensaje('')
-    } else{
-        setMensaje('sin propina no hay pedido boton...')
+  const handleNombreChange = (event) => {
+    const newNombre = event.target.value;
+    setNombre(newNombre);
+    setMensaje('');
+  };
+
+  const handleColorChange = (event) => {
+    const newColor = event.target.value;
+    setColor(newColor);
+    setMensaje('');
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (nombre.length < 3 || nombre.trim() !== nombre) {
+      setMensaje('Ingresar un nombre de al menos 3 letras');
+    } else if (color.length < 6) {
+      setMensaje('Ingresar un color que tenga al menos 6 caracteres');
+    } else {
+      setMensaje('');
+      onSubmit(nombre, color);
     }
+  };
 
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <input
+          type="text"
+          value={nombre}
+          onChange={handleNombreChange}
+          placeholder="Nombre"
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          value={color}
+          onChange={handleColorChange}
+          placeholder="Color"
+        />
+      </div>
+      <button type="submit">Enviar</button>
+      {mensaje && <p>{mensaje}</p>}
+    </form>
+  );
 }
 
-    return(
-        <form onSubmit={validacion}>
-            <label htmlFor="pedido">Pedido</label>
-            <input type="text"
-            id="pedido" 
-            value={pedido} 
-            onChange={e=> setPedido(e.target.value)} />
-            {mensaje  ? <p>{mensaje}</p> : null}
-            <button type="submit">Submit</button>
-        </form>
-    )
-}
-
-export default Form
+export default Form;

@@ -1,28 +1,25 @@
-import { useState } from 'react'
-import './App.css'
-import Form from './Componentes/Form'
-import Pedido from './Componentes/Pedido'
-
+import React, { useState } from 'react';
+import './App.css';
+import Form from './Componentes/Form';
+import Card from './Componentes/Card';
 
 function App() {
-  const[elPedido, setElPedido] = useState();
+  const [elCard, setElCard] = useState({ nombre: '', color: '' });
 
-
-  function handleSubmit(pedido){
-    setElPedido(pedido);
+  function handleSubmit(nombre, color) {
+    setElCard({ nombre, color });
   }
-  
 
   return (
     <>
-  <Form onPedido={handleSubmit}/>
-
-  {elPedido ? <Pedido>{elPedido}</Pedido> : "Ingresa tu pedido"  }
-
-  
-
+      <Form onSubmit={handleSubmit} />
+      {elCard.nombre ? (
+        <Card nombre={elCard.nombre} color={elCard.color} />
+      ) : (
+        <p>Tu nombre y color favorito es</p>
+      )}
     </>
-  )
+  );
 }
-
-export default App
+//se me rompio todo que ni el react me quiere importar D:
+export default App;
